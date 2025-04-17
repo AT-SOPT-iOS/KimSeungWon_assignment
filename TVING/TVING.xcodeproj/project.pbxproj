@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E3E1193C2DB0F9C600F43560 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E3E1193B2DB0F9C600F43560 /* SnapKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		E36F85962DABF246005BDA2B /* TVING.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TVING.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3E1193C2DB0F9C600F43560 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 			);
 			name = TVING;
 			packageProductDependencies = (
+				E3E1193B2DB0F9C600F43560 /* SnapKit */,
 			);
 			productName = TVING;
 			productReference = E36F85962DABF246005BDA2B /* TVING.app */;
@@ -107,6 +113,9 @@
 			);
 			mainGroup = E36F858D2DABF246005BDA2B;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				E3E1193A2DB0F9C600F43560 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E36F85972DABF246005BDA2B /* Products */;
 			projectDirPath = "";
@@ -335,6 +344,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E3E1193A2DB0F9C600F43560 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E3E1193B2DB0F9C600F43560 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E3E1193A2DB0F9C600F43560 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E36F858E2DABF246005BDA2B /* Project object */;
 }
