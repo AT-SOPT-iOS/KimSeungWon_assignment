@@ -25,6 +25,8 @@ final class LoginViewController: UIViewController {
     private let passwordClearButton = UIButton()
     private let passwordSecureButton = UIButton()
     
+    private let loginButton = TvingRedButton("로그인하기", isEnabled: false)
+    
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
@@ -69,7 +71,7 @@ private extension LoginViewController {
     }
     
     func setUI() {
-        view.addSubviews(loginLabel, idTextField, passwordTextField)
+        view.addSubviews(loginLabel, idTextField, passwordTextField, loginButton)
         
         idTextFieldRightView.addSubview(idClearButton)
         passwordTextFieldRightView.addSubviews(passwordClearButton, passwordSecureButton)
@@ -112,6 +114,12 @@ private extension LoginViewController {
             $0.trailing.equalToSuperview().inset(22)
             $0.size.equalTo(20)
         }
+        
+        loginButton.snp.makeConstraints {
+            $0.top.equalTo(passwordTextField.snp.bottom).offset(21)
+            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.height.equalTo(52)
+        }
     }
 }
 
@@ -128,9 +136,30 @@ extension LoginViewController {
     }
     
     private func setAction() {
+        idTextField.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
+        
         idClearButton.addTarget(self, action: #selector(clearButtonDidTap), for: .touchUpInside)
         passwordClearButton.addTarget(self, action: #selector(clearButtonDidTap), for: .touchUpInside)
         passwordSecureButton.addTarget(self, action: #selector(secureButtonDidTap), for: .touchUpInside)
+        
+        loginButton.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
+    }
+    
+    private func toggleLoginButton(_ isEnabled: Bool) {
+        loginButton.isEnabled = isEnabled
+    }
+    
+    @objc
+    private func textFieldEditingChanged() {
+        var isButtonEnabled = false
+        
+        if let id = idTextField.text, !id.isEmpty,
+           let password = passwordTextField.text, !password.isEmpty {
+            isButtonEnabled = true
+        }
+        
+        toggleLoginButton(isButtonEnabled)
     }
     
     @objc
@@ -143,11 +172,17 @@ extension LoginViewController {
         default:
             break
         }
+        toggleLoginButton(false)
     }
     
     @objc
     private func secureButtonDidTap() {
         passwordTextField.isSecureTextEntry.toggle()
+    }
+    
+    @objc
+    private func loginButtonDidTap() {
+        print("로그인 버튼 눌림")
     }
 }
 
