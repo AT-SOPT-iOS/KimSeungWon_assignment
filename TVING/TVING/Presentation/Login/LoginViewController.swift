@@ -32,6 +32,10 @@ final class LoginViewController: UIViewController {
     private let dividerView = UIView()
     private let findStackView = UIStackView()
     
+    private let noAccountLabel = UILabel()
+    private let makeNicknameButton = UIButton(type: .system)
+    private let nicknameStackView = UIStackView()
+    
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
@@ -88,15 +92,31 @@ private extension LoginViewController {
         findStackView.alignment = .center
         findStackView.distribution = .fill
         findStackView.axis = .horizontal
+        
+        noAccountLabel.text = "아직 계정이 없으신가요?"
+        noAccountLabel.textColor = .gray3
+        noAccountLabel.font = .pretendard(.semiBold, size: 14)
+        
+        makeNicknameButton.setTitle("닉네임 만들러가기", for: .normal)
+        makeNicknameButton.setTitleColor(.gray2, for: .normal)
+        makeNicknameButton.titleLabel?.font = .pretendard(.regular, size: 14)
+        makeNicknameButton.addUnderline()
+        
+        nicknameStackView.spacing = 17
+        nicknameStackView.alignment = .fill
+        nicknameStackView.distribution = .fill
+        nicknameStackView.axis = .horizontal
     }
     
     func setUI() {
-        view.addSubviews(loginLabel, idTextField, passwordTextField, loginButton, findStackView)
+        view.addSubviews(loginLabel, idTextField, passwordTextField, loginButton, findStackView, nicknameStackView)
         
         idTextFieldRightView.addSubview(idClearButton)
         passwordTextFieldRightView.addSubviews(passwordClearButton, passwordSecureButton)
         
         findStackView.addArrangedSubviews(findIdButton, dividerView, findPasswordButton)
+        
+        nicknameStackView.addArrangedSubviews(noAccountLabel, makeNicknameButton)
     }
     
     func setLayout() {
@@ -158,6 +178,20 @@ private extension LoginViewController {
         
         findStackView.snp.makeConstraints {
             $0.top.equalTo(loginButton.snp.bottom).offset(31)
+            $0.centerX.equalToSuperview()
+        }
+        
+        noAccountLabel.snp.makeConstraints {
+            $0.height.equalTo(22)
+        }
+        
+        makeNicknameButton.snp.makeConstraints {
+            $0.height.equalTo(22)
+            $0.width.equalTo(128)
+        }
+        
+        nicknameStackView.snp.makeConstraints {
+            $0.top.equalTo(findStackView.snp.bottom).offset(28)
             $0.centerX.equalToSuperview()
         }
     }
