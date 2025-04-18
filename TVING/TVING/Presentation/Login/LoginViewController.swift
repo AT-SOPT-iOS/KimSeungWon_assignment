@@ -15,8 +15,8 @@ final class LoginViewController: UIViewController {
     
     private let loginLabel = UILabel()
     
-    private let idTextField = LoginTextField(.id)
-    private let passwordTextField = LoginTextField(.password)
+    private let idTextField = TvingTextField(.id)
+    private let passwordTextField = TvingTextField(.password)
     
     private let idTextFieldRightView = UIView()
     private let passwordTextFieldRightView = UIView()

@@ -1,5 +1,5 @@
 //
-//  LoginTextFIeld.swift
+//  TvingTextFIeld.swift
 //  TVING
 //
 //  Created by 김승원 on 4/18/25.
@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class LoginTextField: UITextField {
+final class TvingTextField: UITextField {
 
     // MARK: - Initializer
     
@@ -26,7 +26,7 @@ final class LoginTextField: UITextField {
 
 // MARK: - Functions
 
-private extension LoginTextField {
+private extension TvingTextField {
     func setTextField(textFieldType: TextFieldType) {
         placeholder = textFieldType.placeholder
         textColor = .gray2
@@ -45,7 +45,7 @@ private extension LoginTextField {
     }
 }
 
-extension LoginTextField {
+extension TvingTextField {
     enum TextFieldType {
         case id
         case password
