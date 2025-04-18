@@ -15,7 +15,7 @@ extension String {
     }
     
     var isValidPassword: Bool {
-        let regularExpression = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8}$"
+        let regularExpression = "^(?=.*[!_@$%^&+=])[A-Za-z0-9!_@$%^&+=]{8,15}$"
         let predicate = NSPredicate(format: "SELF MATCHES %@", regularExpression)
         return predicate.evaluate(with: self)
     }
