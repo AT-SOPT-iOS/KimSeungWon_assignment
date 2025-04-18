@@ -155,10 +155,10 @@ extension LoginViewController {
 
 extension LoginViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.setBorder(1, borderColor: .gray2)
+        textField.layer.borderWidth = 1
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.setBorder(0, borderColor: .gray2)
+        textField.layer.borderWidth = 0
     }
 }
