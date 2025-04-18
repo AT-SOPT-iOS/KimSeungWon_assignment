@@ -13,9 +13,17 @@ final class TvingRedButton: UIButton {
     
     override var isEnabled: Bool {
         didSet {
-            updateButton()
+            updateButtonState()
         }
     }
+    
+    override var isHighlighted: Bool {
+        didSet {
+            updateButtonColor()
+        }
+    }
+    
+    // MARK: - Initializer
     
     init(_ title: String, isEnabled: Bool = true) {
         super.init(frame: .zero)
@@ -38,12 +46,16 @@ private extension TvingRedButton {
         setCornerRadius(3)
     }
     
-    func updateButton() {
+    func updateButtonState() {
         /*
          Todo: 과연 좋은 코드인가 생각....
          */
         setBorder(isEnabled ? 0 : 1, borderColor: .gray4)
         backgroundColor = isEnabled ? .primaryRed : .primaryBlack
         setTitleColor(isEnabled ? .primaryWhite : .gray2, for: .normal)
+    }
+    
+    func updateButtonColor() {
+        backgroundColor = isHighlighted ? .secondaryRed : .primaryRed
     }
 }
