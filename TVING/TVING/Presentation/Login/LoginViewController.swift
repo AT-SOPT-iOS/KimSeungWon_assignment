@@ -141,7 +141,14 @@ private extension LoginViewController {
     }
     
     func setUI() {
-        view.addSubviews(loginLabel, idTextField, passwordTextField, loginButton, findStackView, nicknameStackView)
+        view.addSubviews(
+            loginLabel,
+            idTextField,
+            passwordTextField,
+            loginButton,
+            findStackView,
+            nicknameStackView
+        )
         
         idTextFieldRightView.addSubview(idClearButton)
         passwordTextFieldRightView.addSubviews(passwordClearButton, passwordSecureButton)
@@ -288,6 +295,24 @@ extension LoginViewController {
     
     @objc
     private func loginButtonDidTap() {
+        guard let id = idTextField.text, id.isValidEmail else {
+            AlertManager.showAlert(on: self, title: "알림", message: "올바른 이메일 형식이 아닙니다.")
+            return
+        }
+        
+        guard let password = passwordTextField.text, password.isValidPassword else {
+            AlertManager.showAlert(
+                on: self,
+                title: "알림",
+                message:
+                """
+                올바른 비밀번호 형식이 아닙니다.
+                8~15자 이내 영어 대소문자, 특수기호를 사용해 주세요.
+                """
+            )
+            return
+        }
+        
         let viewController = WelcomeViewController()
         navigationController?.pushViewController(viewController, animated: true)
     }
