@@ -8,6 +8,7 @@
 import UIKit
 
 import SnapKit
+import Then
 
 final class LoginViewController: UIViewController {
     
@@ -60,52 +61,83 @@ final class LoginViewController: UIViewController {
 
 private extension LoginViewController {
     func setStyle() {
-        view.backgroundColor = .primaryBlack
+        view.do {
+            $0.backgroundColor = .primaryBlack
+        }
         
-        loginLabel.text = "TVING ID 로그인"
-        loginLabel.font = .pretendard(.regular, size: 23)
-        loginLabel.textColor = .gray1
-        loginLabel.textAlignment = .center
+        loginLabel.do {
+            $0.text = "TVING ID 로그인"
+            $0.font = .pretendard(.regular, size: 23)
+            $0.textColor = .gray1
+            $0.textAlignment = .center
+        }
         
-        idTextField.rightView = idTextFieldRightView
-        idTextField.tag = 0
-        passwordTextField.rightView = passwordTextFieldRightView
-        passwordTextField.tag = 1
+        idTextField.do {
+            $0.rightView = idTextFieldRightView
+            $0.tag = 0
+        }
         
-        idClearButton.setImage(.xIcon, for: .normal)
-        idClearButton.tag = 0
-        passwordClearButton.setImage(.xIcon, for: .normal)
-        passwordClearButton.tag = 1
-        passwordSecureButton.setImage(.eyeSlashIcon, for: .normal)
+        passwordTextField.do {
+            $0.rightView = passwordTextFieldRightView
+            $0.tag = 1
+        }
         
-        findIdButton.setTitle("아이디 찾기", for: .normal)
-        findIdButton.setTitleColor(.gray2, for: .normal)
-        findIdButton.titleLabel?.font = .pretendard(.semiBold, size: 14)
+        idClearButton.do {
+            $0.setImage(.xIcon, for: .normal)
+            $0.tag = 0
+        }
         
-        findPasswordButton.setTitle("비밀번호 찾기", for: .normal)
-        findPasswordButton.setTitleColor(.gray2, for: .normal)
-        findPasswordButton.titleLabel?.font = .pretendard(.semiBold, size: 14)
+        passwordClearButton.do {
+            $0.setImage(.xIcon, for: .normal)
+            $0.tag = 1
+        }
         
-        dividerView.backgroundColor = .gray4
+        passwordSecureButton.do {
+            $0.setImage(.eyeSlashIcon, for: .normal)
+        }
         
-        findStackView.spacing = 33
-        findStackView.alignment = .center
-        findStackView.distribution = .fill
-        findStackView.axis = .horizontal
+        findIdButton.do {
+            $0.setTitle("아이디 찾기", for: .normal)
+            $0.setTitleColor(.gray2, for: .normal)
+            $0.titleLabel?.font = .pretendard(.semiBold, size: 14)
+        }
         
-        noAccountLabel.text = "아직 계정이 없으신가요?"
-        noAccountLabel.textColor = .gray3
-        noAccountLabel.font = .pretendard(.semiBold, size: 14)
+        findPasswordButton.do {
+            $0.setTitle("비밀번호 찾기", for: .normal)
+            $0.setTitleColor(.gray2, for: .normal)
+            $0.titleLabel?.font = .pretendard(.semiBold, size: 14)
+        }
         
-        makeNicknameButton.setTitle("닉네임 만들러가기", for: .normal)
-        makeNicknameButton.setTitleColor(.gray2, for: .normal)
-        makeNicknameButton.titleLabel?.font = .pretendard(.regular, size: 14)
-        makeNicknameButton.addUnderline()
+        dividerView.do {
+            $0.backgroundColor = .gray4
+        }
         
-        nicknameStackView.spacing = 17
-        nicknameStackView.alignment = .fill
-        nicknameStackView.distribution = .fill
-        nicknameStackView.axis = .horizontal
+        findStackView.do {
+            $0.spacing = 33
+            $0.alignment = .center
+            $0.distribution = .fill
+            $0.axis = .horizontal
+        }
+        
+        noAccountLabel.do {
+            $0.text = "아직 계정이 없으신가요?"
+            $0.textColor = .gray3
+            $0.font = .pretendard(.semiBold, size: 14)
+        }
+        
+        makeNicknameButton.do {
+            $0.setTitle("닉네임 만들러가기", for: .normal)
+            $0.setTitleColor(.gray2, for: .normal)
+            $0.titleLabel?.font = .pretendard(.regular, size: 14)
+            $0.addUnderline()
+        }
+        
+        nicknameStackView.do {
+            $0.spacing = 17
+            $0.alignment = .fill
+            $0.distribution = .fill
+            $0.axis = .horizontal
+        }
     }
     
     func setUI() {
@@ -121,7 +153,7 @@ private extension LoginViewController {
     
     func setLayout() {
         loginLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(90)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(46)
             $0.centerX.equalToSuperview()
         }
         
@@ -256,7 +288,8 @@ extension LoginViewController {
     
     @objc
     private func loginButtonDidTap() {
-        print("로그인 버튼 눌림")
+        let viewController = WelcomeViewController()
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
