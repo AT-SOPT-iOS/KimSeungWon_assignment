@@ -27,6 +27,11 @@ final class LoginViewController: UIViewController {
     
     private let loginButton = TvingRedButton("로그인하기", isEnabled: false)
     
+    private let findIdButton = UIButton(type: .system)
+    private let findPasswordButton = UIButton(type: .system)
+    private let dividerView = UIView()
+    private let findStackView = UIStackView()
+    
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
@@ -68,13 +73,30 @@ private extension LoginViewController {
         passwordClearButton.setImage(.xIcon, for: .normal)
         passwordClearButton.tag = 1
         passwordSecureButton.setImage(.eyeSlashIcon, for: .normal)
+        
+        findIdButton.setTitle("아이디 찾기", for: .normal)
+        findIdButton.setTitleColor(.gray2, for: .normal)
+        findIdButton.titleLabel?.font = .pretendard(.semiBold, size: 14)
+        
+        findPasswordButton.setTitle("비밀번호 찾기", for: .normal)
+        findPasswordButton.setTitleColor(.gray2, for: .normal)
+        findPasswordButton.titleLabel?.font = .pretendard(.semiBold, size: 14)
+        
+        dividerView.backgroundColor = .gray4
+        
+        findStackView.spacing = 33
+        findStackView.alignment = .center
+        findStackView.distribution = .fill
+        findStackView.axis = .horizontal
     }
     
     func setUI() {
-        view.addSubviews(loginLabel, idTextField, passwordTextField, loginButton)
+        view.addSubviews(loginLabel, idTextField, passwordTextField, loginButton, findStackView)
         
         idTextFieldRightView.addSubview(idClearButton)
         passwordTextFieldRightView.addSubviews(passwordClearButton, passwordSecureButton)
+        
+        findStackView.addArrangedSubviews(findIdButton, dividerView, findPasswordButton)
     }
     
     func setLayout() {
@@ -119,6 +141,24 @@ private extension LoginViewController {
             $0.top.equalTo(passwordTextField.snp.bottom).offset(21)
             $0.horizontalEdges.equalToSuperview().inset(20)
             $0.height.equalTo(52)
+        }
+        
+        findIdButton.snp.makeConstraints {
+            $0.height.equalTo(22)
+        }
+        
+        findPasswordButton.snp.makeConstraints {
+            $0.height.equalTo(22)
+        }
+        
+        dividerView.snp.makeConstraints {
+            $0.width.equalTo(2)
+            $0.height.equalTo(12)
+        }
+        
+        findStackView.snp.makeConstraints {
+            $0.top.equalTo(loginButton.snp.bottom).offset(31)
+            $0.centerX.equalToSuperview()
         }
     }
 }
