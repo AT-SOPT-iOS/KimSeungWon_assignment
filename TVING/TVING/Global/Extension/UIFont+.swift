@@ -35,6 +35,7 @@ extension UIFont {
         }
     }
     
+    /// Pretendard 폰트 사용 함수입니다
     static func pretendard(_ fontFamily: FontFamily, size: CGFloat) -> UIFont {
         guard let pretendardFont = UIFont(name: "Pretendard-\(fontFamily.kind)", size: size) else {
             fatalError("fatalError: 폰트를 찾을 수 없어요ㅠ!")
