@@ -18,7 +18,7 @@ class NicknameSheetViewController: UIViewController {
     
     private let nicknameTextField = TvingTextField(.nickname)
     
-    private let saveButton = TvingRedButton("저장하기")
+    private let saveButton = TvingRedButton("저장하기", isEnabled: false)
     
     // MARK: - Life Cycle
 
@@ -28,6 +28,9 @@ class NicknameSheetViewController: UIViewController {
         setStyle()
         setUI()
         setLayout()
+        setDelegate()
+        setAction()
+        hideKeyboardWhenDidTap()
     }
 }
 
@@ -67,5 +70,44 @@ private extension NicknameSheetViewController {
             $0.horizontalEdges.equalToSuperview().inset(20)
             $0.height.equalTo(52)
         }
+    }
+}
+
+// MARK: - Functions
+
+extension NicknameSheetViewController {
+    private func setDelegate() {
+        nicknameTextField.delegate = self
+    }
+    
+    private func setAction() {
+        nicknameTextField.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
+        
+        saveButton.addTarget(self, action: #selector(saveButtonDidTap), for: .touchUpInside)
+    }
+    
+    @objc
+    private func textFieldEditingChanged() {
+        var isButtonEnabled = false
+        
+        if let nickname = nicknameTextField.text, !nickname.isEmpty {
+            isButtonEnabled = true
+        }
+        
+        saveButton.isEnabled = isButtonEnabled
+    }
+    
+    @objc
+    private func saveButtonDidTap() {
+        self.dismiss(animated: true)
+    }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension NicknameSheetViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        nicknameTextField.resignFirstResponder()
+        return true
     }
 }
