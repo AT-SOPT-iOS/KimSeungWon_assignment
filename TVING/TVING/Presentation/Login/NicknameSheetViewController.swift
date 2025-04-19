@@ -22,6 +22,8 @@ class NicknameSheetViewController: UIViewController {
     
     // MARK: - UI Properties
     
+    private let grabberView = UIView()
+    
     private let titleLabel = UILabel()
     
     private let nicknameTextField = TvingTextField(.nickname)
@@ -46,6 +48,11 @@ class NicknameSheetViewController: UIViewController {
 
 private extension NicknameSheetViewController {
     func setStyle() {
+        grabberView.do {
+            $0.backgroundColor = .gray1
+            $0.setCornerRadius(3)
+        }
+        
         view.do {
             $0.backgroundColor = .primaryWhite
         }
@@ -58,12 +65,19 @@ private extension NicknameSheetViewController {
     }
     
     func setUI() {
-        view.addSubviews(titleLabel, nicknameTextField, saveButton)
+        view.addSubviews(grabberView, titleLabel, nicknameTextField, saveButton)
     }
     
     func setLayout() {
+        grabberView.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(15)
+            $0.height.equalTo(6)
+            $0.width.equalTo(56)
+            $0.centerX.equalToSuperview()
+        }
+        
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(50)
+            $0.top.equalTo(grabberView.snp.bottom).offset(29)
             $0.horizontalEdges.equalToSuperview().inset(20)
         }
         
