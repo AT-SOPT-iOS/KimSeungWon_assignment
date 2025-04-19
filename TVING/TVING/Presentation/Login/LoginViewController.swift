@@ -151,6 +151,7 @@ private extension LoginViewController {
         )
         
         idTextFieldRightView.addSubview(idClearButton)
+        
         passwordTextFieldRightView.addSubviews(passwordClearButton, passwordSecureButton)
         
         findStackView.addArrangedSubviews(findIdButton, dividerView, findPasswordButton)
@@ -313,7 +314,7 @@ extension LoginViewController {
             return
         }
         
-        let viewController = WelcomeViewController()
+        let viewController = WelcomeViewController(id: id)
         navigationController?.pushViewController(viewController, animated: true)
     }
 }
