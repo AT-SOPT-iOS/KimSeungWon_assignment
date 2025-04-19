@@ -383,6 +383,5 @@ extension LoginViewController: UITextFieldDelegate {
 extension LoginViewController: NicknameSheetViewControllerDelegate {
     func nicknameDidSubmit(_ nickname: String) {
         self.nickname = nickname
-        print("self.nickname: \(self.nickname!)")
     }
 }

@@ -46,10 +46,10 @@ private extension TvingRedButton {
         setCornerRadius(3)
     }
     
+    /*
+     Todo:과연 좋은 코드인가 생각 (이야기 해보고 싶은 부분) ...
+     */
     func updateButtonState() {
-        /*
-         Todo: 과연 좋은 코드인가 생각....
-         */
         setBorder(isEnabled ? 0 : 1, borderColor: .gray4)
         backgroundColor = isEnabled ? .primaryRed : .primaryBlack
         setTitleColor(isEnabled ? .primaryWhite : .gray2, for: .normal)
