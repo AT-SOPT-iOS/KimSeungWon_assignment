@@ -10,7 +10,15 @@ import UIKit
 import SnapKit
 import Then
 
+protocol NicknameSheetViewControllerDelegate: AnyObject {
+    func nicknameDidSubmit(_ nickname: String)
+}
+
 class NicknameSheetViewController: UIViewController {
+    
+    // MARK: - Properties
+    
+    weak var delegate: NicknameSheetViewControllerDelegate?
     
     // MARK: - UI Properties
     
@@ -99,6 +107,8 @@ extension NicknameSheetViewController {
     
     @objc
     private func saveButtonDidTap() {
+        guard let nickname = nicknameTextField.text else { return }
+        delegate?.nicknameDidSubmit(nickname)
         self.dismiss(animated: true)
     }
 }

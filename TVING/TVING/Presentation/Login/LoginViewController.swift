@@ -12,6 +12,10 @@ import Then
 
 final class LoginViewController: UIViewController {
     
+    // MARK: - Properties
+    
+    private var nickname: String?
+    
     // MARK: - UI Properties
     
     private let loginLabel = UILabel()
@@ -278,6 +282,7 @@ extension LoginViewController {
             sheet.preferredCornerRadius = 20
         }
         
+        nicknameSheetViewController.delegate = self
         nicknameSheetViewController.isModalInPresentation = false
         self.present(nicknameSheetViewController, animated: true)
     }
@@ -370,5 +375,14 @@ extension LoginViewController: UITextFieldDelegate {
         }
         
         return true
+    }
+}
+
+// MARK: - NicknameSheetViewControllerDelegate
+
+extension LoginViewController: NicknameSheetViewControllerDelegate {
+    func nicknameDidSubmit(_ nickname: String) {
+        self.nickname = nickname
+        print("self.nickname: \(self.nickname!)")
     }
 }
