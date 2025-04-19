@@ -258,10 +258,28 @@ extension LoginViewController {
         passwordSecureButton.addTarget(self, action: #selector(secureButtonDidTap), for: .touchUpInside)
         
         loginButton.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
+        
+        makeNicknameButton.addTarget(self, action: #selector(makeNicknameButtonDidTap), for: .touchUpInside)
     }
     
     private func toggleLoginButton(_ isEnabled: Bool) {
         loginButton.isEnabled = isEnabled
+    }
+    
+    private func presentNicknameSheet() {
+        let nicknameSheetViewController = NicknameSheetViewController()
+        let sheetDetent = UISheetPresentationController.Detent.custom { _ in
+            return UIScreen.main.bounds.height / 2
+        }
+        
+        if let sheet = nicknameSheetViewController.sheetPresentationController {
+            sheet.detents = [sheetDetent]
+            sheet.prefersGrabberVisible = false
+            sheet.preferredCornerRadius = 20
+        }
+        
+        nicknameSheetViewController.isModalInPresentation = false
+        self.present(nicknameSheetViewController, animated: true)
     }
     
     @objc
