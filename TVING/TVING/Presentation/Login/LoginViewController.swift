@@ -297,7 +297,10 @@ extension LoginViewController {
     @objc
     private func loginButtonDidTap() {
         guard let id = idTextField.text, id.isValidEmail else {
-            AlertManager.showAlert(on: self, title: "알림", message: "올바른 이메일 형식이 아닙니다.")
+            AlertManager.showAlert(on: self, title: "알림", message: "올바른 이메일 형식이 아닙니다.") { [weak self] action in
+                guard let self else { return }
+                self.idTextField.becomeFirstResponder()
+            }
             return
         }
         
@@ -310,12 +313,20 @@ extension LoginViewController {
                 올바른 비밀번호 형식이 아닙니다.
                 8~15자 이내 영어 대소문자, 특수기호를 사용해 주세요.
                 """
-            )
+            ) { [weak self] action in
+                guard let self else { return }
+                passwordTextField.becomeFirstResponder()
+            }
             return
         }
         
-        let viewController = WelcomeViewController(id: id)
-        navigationController?.pushViewController(viewController, animated: true)
+        let welcomeViewController = WelcomeViewController(id: id)
+        navigationController?.pushViewController(welcomeViewController, animated: true)
+    }
+    
+    @objc
+    private func makeNicknameButtonDidTap() {
+        presentNicknameSheet()
     }
 }
 
@@ -328,5 +339,18 @@ extension LoginViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.layer.borderWidth = 0
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch textField.tag {
+        case 0:
+            passwordTextField.becomeFirstResponder()
+        case 1:
+            passwordTextField.resignFirstResponder()
+        default:
+            break
+        }
+        
+        return true
     }
 }
