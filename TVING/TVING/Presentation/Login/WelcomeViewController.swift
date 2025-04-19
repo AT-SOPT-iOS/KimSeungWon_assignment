@@ -15,6 +15,8 @@ final class WelcomeViewController: UIViewController {
     
     private let id: String
     
+    private let nickname: String?
+    
     // MARK: - UI Properties
     
     private let bannerImageView = UIImageView()
@@ -25,8 +27,9 @@ final class WelcomeViewController: UIViewController {
     
     // MARK: - Initializer
     
-    init(id: String) {
+    init(id: String, nickname: String?) {
         self.id = id
+        self.nickname = nickname
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -66,7 +69,7 @@ private extension WelcomeViewController {
         }
         
         greetingLabel.do {
-            $0.text = "\(id)님\n반가워요!"
+            $0.text = "\(nickname ?? id) 님\n반가워요!"
             $0.font = .pretendard(.bold, size: 23)
             $0.setLineSpacing(spacing: 15)
             $0.textColor = .gray1

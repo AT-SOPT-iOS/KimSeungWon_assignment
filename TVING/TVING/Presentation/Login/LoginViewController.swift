@@ -343,7 +343,7 @@ extension LoginViewController {
             return
         }
         
-        let welcomeViewController = WelcomeViewController(id: id)
+        let welcomeViewController = WelcomeViewController(id: id, nickname: nickname)
         navigationController?.pushViewController(welcomeViewController, animated: true)
     }
     
