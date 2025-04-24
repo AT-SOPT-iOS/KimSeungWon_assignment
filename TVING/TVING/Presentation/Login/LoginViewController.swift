@@ -51,7 +51,7 @@ final class LoginViewController: UIViewController {
         setLayout()
         setDelegate()
         setAction()
-        hideKeyboardWhenDidTap()
+        hideKeyboardWhenDidTap(cancelsTouches: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
