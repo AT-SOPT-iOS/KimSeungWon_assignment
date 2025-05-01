@@ -45,6 +45,7 @@ final class WelcomeViewController: UIViewController {
         setStyle()
         setUI()
         setLayout()
+        setAction()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -107,5 +108,15 @@ private extension WelcomeViewController {
 extension WelcomeViewController {
     private func setView() {
         navigationController?.navigationBar.isHidden = true
+    }
+    
+    private func setAction() {
+        goToMainButton.addTarget(self, action: #selector(goToMainButtonDidTap), for: .touchUpInside)
+    }
+    
+    @objc
+    private func goToMainButtonDidTap() {
+        let mainViewController = MainViewController()
+        navigationController?.pushViewController(mainViewController, animated: true)
     }
 }
