@@ -42,7 +42,6 @@ final class TodaysTvingCell: BaseCollectionViewCell {
         
         imageView.do {
             $0.contentMode = .scaleAspectFill
-            $0.clipsToBounds = true
             $0.setCornerRadius(5)
         }
     }

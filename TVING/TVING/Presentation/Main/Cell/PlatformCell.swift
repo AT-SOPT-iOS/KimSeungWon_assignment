@@ -34,7 +34,6 @@ final class PlatformCell: BaseCollectionViewCell {
         contentView.do {
             $0.backgroundColor = .gray4
             $0.setCornerRadius(5)
-            $0.clipsToBounds = true
         }
         
         imageView.do {

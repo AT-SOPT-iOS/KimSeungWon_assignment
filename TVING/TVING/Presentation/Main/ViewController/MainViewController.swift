@@ -55,17 +55,29 @@ final class MainViewController: BaseViewController {
 private extension MainViewController {
     func setRegister() {
         rootView.collectionView.register(MainCell.self, forCellWithReuseIdentifier: MainCell.reuseIdentifier)
+        
         rootView.collectionView.register(TodaysTvingCell.self, forCellWithReuseIdentifier: TodaysTvingCell.reuseIdentifier)
+        
         rootView.collectionView.register(LiveCell.self, forCellWithReuseIdentifier: LiveCell.reuseIdentifier)
+        
         rootView.collectionView.register(MovieCell.self, forCellWithReuseIdentifier: MovieCell.reuseIdentifier)
+        
         rootView.collectionView.register(BaseballCell.self, forCellWithReuseIdentifier: BaseballCell.reuseIdentifier)
+        
         rootView.collectionView.register(PlatformCell.self, forCellWithReuseIdentifier: PlatformCell.reuseIdentifier)
+        
         rootView.collectionView.register(BestContentsCell.self, forCellWithReuseIdentifier: BestContentsCell.reuseIdentifier)
         
         rootView.collectionView.register(
             MainHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: MainHeaderView.reuseIdentifier
+        )
+        
+        rootView.collectionView.register(
+            MainFooterView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: MainFooterView.reuseIdentifier
         )
     }
 }
@@ -253,7 +265,7 @@ private extension MainViewController {
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12)
         section.interGroupSpacing = 7
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
-        section.boundarySupplementaryItems = [configureHeaderView()]
+        section.boundarySupplementaryItems = [configureHeaderView(), configureFooterView()]
         
         return section
     }
@@ -273,6 +285,21 @@ private extension MainViewController {
         header.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: -12, bottom: 0, trailing: -12)
         
         return header
+    }
+    
+    func configureFooterView() -> NSCollectionLayoutBoundarySupplementaryItem {
+        let size = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(190)
+        )
+        
+        let footer = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: size,
+            elementKind: UICollectionView.elementKindSectionFooter,
+            alignment: .bottom
+        )
+        
+        return footer
     }
 }
 
@@ -310,6 +337,7 @@ extension MainViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
+        
         switch MainSection.allCases[indexPath.section] {
         case .mainPoster:
             guard let cell = rootView.collectionView.dequeueReusableCell(
@@ -388,27 +416,43 @@ extension MainViewController: UICollectionViewDataSource {
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
-        guard let headerView = rootView.collectionView.dequeueReusableSupplementaryView(
-            ofKind: kind,
-            withReuseIdentifier: MainHeaderView.reuseIdentifier,
-            for: indexPath
-        ) as? MainHeaderView else {
-            return UICollectionReusableView()
+        
+        if kind == UICollectionView.elementKindSectionHeader {
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: MainHeaderView.reuseIdentifier,
+                for: indexPath
+            ) as? MainHeaderView else {
+                return UICollectionReusableView()
+            }
+            
+            switch MainSection.allCases[indexPath.section] {
+            case .mainPoster, .baseball, .platform:
+                break
+            case .todaysTving:
+                headerView.configure(title: "오늘의 티빙 TOP 5")
+            case .live:
+                headerView.configure(title: "실시간 인기 라이브", shouldShowButton: true)
+            case .movie:
+                headerView.configure(title: "실시간 인기 영화", shouldShowButton: true)
+            case .bestContents:
+                headerView.configure(title: "김승원PD의 인생작 TOP 5")
+            }
+            
+            return headerView
         }
         
-        switch MainSection.allCases[indexPath.section] {
-        case .mainPoster, .baseball, .platform:
-            break
-        case .todaysTving:
-            headerView.configure(title: "오늘의 티빙 TOP 5")
-        case .live:
-            headerView.configure(title: "실시간 인기 라이브", shouldShowButton: true)
-        case .movie:
-            headerView.configure(title: "실시간 인기 영화" , shouldShowButton: true)
-        case .bestContents:
-            headerView.configure(title: "김승원PD의 인생작 TOP 5")
+        if kind == UICollectionView.elementKindSectionFooter {
+            guard let footerView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: MainFooterView.reuseIdentifier,
+                for: indexPath
+            ) as? MainFooterView else {
+                return UICollectionReusableView()
+            }
+            return footerView
         }
         
-        return headerView
+        return UICollectionReusableView()
     }
 }

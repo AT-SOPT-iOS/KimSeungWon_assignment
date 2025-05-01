@@ -35,7 +35,6 @@ final class BestContentsCell: BaseCollectionViewCell {
     override func setStyle() {
         imageView.do {
             $0.contentMode = .scaleAspectFill
-            $0.clipsToBounds = true
             $0.setCornerRadius(5)
         }
     }
