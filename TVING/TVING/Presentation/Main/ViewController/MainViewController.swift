@@ -17,6 +17,8 @@ final class MainViewController: BaseViewController {
         case live
         case movie
         case baseball
+        case platform
+        case bestContents
     }
     
     private let rootView = MainView()
@@ -57,6 +59,8 @@ private extension MainViewController {
         rootView.collectionView.register(LiveCell.self, forCellWithReuseIdentifier: LiveCell.reuseIdentifier)
         rootView.collectionView.register(MovieCell.self, forCellWithReuseIdentifier: MovieCell.reuseIdentifier)
         rootView.collectionView.register(BaseballCell.self, forCellWithReuseIdentifier: BaseballCell.reuseIdentifier)
+        rootView.collectionView.register(PlatformCell.self, forCellWithReuseIdentifier: PlatformCell.reuseIdentifier)
+        rootView.collectionView.register(BestContentsCell.self, forCellWithReuseIdentifier: BestContentsCell.reuseIdentifier)
         
         rootView.collectionView.register(
             MainHeaderView.self,
@@ -84,6 +88,10 @@ private extension MainViewController {
                 return self.configureMovieSection()
             case .baseball:
                 return self.configureBaseballSection()
+            case .platform:
+                return self.configurePlatformSection()
+            case .bestContents:
+                return self.configureBestSection()
             }
         }
     }
@@ -127,7 +135,7 @@ private extension MainViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 12
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12)
-        section.orthogonalScrollingBehavior = .groupPaging
+        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         section.boundarySupplementaryItems = [configureHeaderView()]
         
         return section
@@ -151,7 +159,7 @@ private extension MainViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 7
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12)
-        section.orthogonalScrollingBehavior = .groupPaging
+        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         section.boundarySupplementaryItems = [configureHeaderView()]
         
         return section
@@ -175,7 +183,7 @@ private extension MainViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 7
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12)
-        section.orthogonalScrollingBehavior = .groupPaging
+        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         section.boundarySupplementaryItems = [configureHeaderView()]
         
         return section
@@ -198,7 +206,54 @@ private extension MainViewController {
         
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 28, leading: 0, bottom: 0, trailing: 0)
-        section.orthogonalScrollingBehavior = .groupPaging
+        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+        
+        return section
+    }
+    
+    func configurePlatformSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .absolute(90),
+            heightDimension: .absolute(45)
+        )
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 28, leading: 12, bottom: 0, trailing: 12)
+        section.interGroupSpacing = 7
+        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+        
+        return section
+    }
+    
+    func configureBestSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .absolute(160),
+            heightDimension: .absolute(90)
+        )
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12)
+        section.interGroupSpacing = 7
+        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+        section.boundarySupplementaryItems = [configureHeaderView()]
         
         return section
     }
@@ -244,6 +299,10 @@ extension MainViewController: UICollectionViewDataSource {
             return EntertainmentContent.movieMockData.count
         case .baseball:
             return EntertainmentContent.baseballMockData.count
+        case .platform:
+            return EntertainmentContent.platformMockData.count
+        case .bestContents:
+            return EntertainmentContent.bestContentsMockData.count
         }
     }
     
@@ -301,6 +360,26 @@ extension MainViewController: UICollectionViewDataSource {
             }
             cell.configure(EntertainmentContent.baseballMockData[indexPath.row], row: indexPath.row)
             return cell
+            
+        case .platform:
+            guard let cell = rootView.collectionView.dequeueReusableCell(
+                withReuseIdentifier: PlatformCell.reuseIdentifier,
+                for: indexPath
+            ) as? PlatformCell else {
+                return UICollectionViewCell()
+            }
+            cell.configure(EntertainmentContent.platformMockData[indexPath.row])
+            return cell
+            
+        case .bestContents:
+            guard let cell = rootView.collectionView.dequeueReusableCell(
+                withReuseIdentifier: BestContentsCell.reuseIdentifier,
+                for: indexPath
+            ) as? BestContentsCell else {
+                return UICollectionViewCell()
+            }
+            cell.configure(EntertainmentContent.bestContentsMockData[indexPath.row])
+            return cell
         }
     }
     
@@ -318,7 +397,7 @@ extension MainViewController: UICollectionViewDataSource {
         }
         
         switch MainSection.allCases[indexPath.section] {
-        case .mainPoster, .baseball:
+        case .mainPoster, .baseball, .platform:
             break
         case .todaysTving:
             headerView.configure(title: "오늘의 티빙 TOP 5")
@@ -326,6 +405,8 @@ extension MainViewController: UICollectionViewDataSource {
             headerView.configure(title: "실시간 인기 라이브", shouldShowButton: true)
         case .movie:
             headerView.configure(title: "실시간 인기 영화" , shouldShowButton: true)
+        case .bestContents:
+            headerView.configure(title: "김승원PD의 인생작 TOP 5")
         }
         
         return headerView

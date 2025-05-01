@@ -88,4 +88,15 @@ extension EntertainmentContent {
             EntertainmentContent(image: .platform2)
         ]
     }
+    
+    // bestContents section mockData
+    static var bestContentsMockData: [Self] {
+        [
+            EntertainmentContent(image: .live5),
+            EntertainmentContent(image: .live4),
+            EntertainmentContent(image: .live3),
+            EntertainmentContent(image: .live2),
+            EntertainmentContent(image: .live1)
+        ]
+    }
 }
