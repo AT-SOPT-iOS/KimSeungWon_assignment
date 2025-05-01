@@ -61,4 +61,19 @@ extension EntertainmentContent {
             EntertainmentContent(image: .movie3)
         ]
     }
+    
+    /// baseball 섹션 mockData
+    static var baseballMockData: [Self] {
+        [
+            EntertainmentContent(image: .baseball1),
+            EntertainmentContent(image: .baseball2),
+            EntertainmentContent(image: .baseball3),
+            EntertainmentContent(image: .baseball4),
+            EntertainmentContent(image: .baseball5),
+            EntertainmentContent(image: .baseball6),
+            EntertainmentContent(image: .baseball7),
+            EntertainmentContent(image: .baseball8),
+            EntertainmentContent(image: .baseball9)
+        ]
+    }
 }

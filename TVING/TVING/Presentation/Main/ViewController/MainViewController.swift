@@ -16,6 +16,7 @@ final class MainViewController: BaseViewController {
         case todaysTving
         case live
         case movie
+        case baseball
     }
     
     private let rootView = MainView()
@@ -55,6 +56,7 @@ private extension MainViewController {
         rootView.collectionView.register(TodaysTvingCell.self, forCellWithReuseIdentifier: TodaysTvingCell.reuseIdentifier)
         rootView.collectionView.register(LiveCell.self, forCellWithReuseIdentifier: LiveCell.reuseIdentifier)
         rootView.collectionView.register(MovieCell.self, forCellWithReuseIdentifier: MovieCell.reuseIdentifier)
+        rootView.collectionView.register(BaseballCell.self, forCellWithReuseIdentifier: BaseballCell.reuseIdentifier)
         
         rootView.collectionView.register(
             MainHeaderView.self,
@@ -80,6 +82,8 @@ private extension MainViewController {
                 return self.configureLiveSection()
             case .movie:
                 return self.configureMovieSection()
+            case .baseball:
+                return self.configureBaseballSection()
             }
         }
     }
@@ -177,6 +181,28 @@ private extension MainViewController {
         return section
     }
     
+    func configureBaseballSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .absolute(80),
+            heightDimension: .absolute(50)
+        )
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 28, leading: 0, bottom: 0, trailing: 0)
+        section.orthogonalScrollingBehavior = .groupPaging
+        
+        return section
+    }
+    
     func configureHeaderView() -> NSCollectionLayoutBoundarySupplementaryItem {
         let size = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
@@ -216,6 +242,8 @@ extension MainViewController: UICollectionViewDataSource {
             return EntertainmentContent.liveMockData.count
         case .movie:
             return EntertainmentContent.movieMockData.count
+        case .baseball:
+            return EntertainmentContent.baseballMockData.count
         }
     }
     
@@ -263,6 +291,16 @@ extension MainViewController: UICollectionViewDataSource {
             }
             cell.configure(EntertainmentContent.movieMockData[indexPath.row])
             return cell
+            
+        case .baseball:
+            guard let cell = rootView.collectionView.dequeueReusableCell(
+                withReuseIdentifier: BaseballCell.reuseIdentifier,
+                for: indexPath
+            ) as? BaseballCell else {
+                return UICollectionViewCell()
+            }
+            cell.configure(EntertainmentContent.baseballMockData[indexPath.row], row: indexPath.row)
+            return cell
         }
     }
     
@@ -280,7 +318,7 @@ extension MainViewController: UICollectionViewDataSource {
         }
         
         switch MainSection.allCases[indexPath.section] {
-        case .mainPoster:
+        case .mainPoster, .baseball:
             break
         case .todaysTving:
             headerView.configure(title: "오늘의 티빙 TOP 5")
