@@ -25,9 +25,7 @@ class BaseCollectionViewCell: UICollectionViewCell, ReuseIdentifiable {
     func setStyle() {}
     
     /// UI 위계 설정 (addSubView 등)
-    func setUI() {
-        backgroundColor = .white
-    }
+    func setUI() {}
     
     /// 오토레이아웃 설정 (SnapKit 코드 관련)
     func setLayout() {}
