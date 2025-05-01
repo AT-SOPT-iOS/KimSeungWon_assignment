@@ -30,10 +30,10 @@ extension EntertainmentContent {
     /// today 섹션 mockData
     static var todaysTvingMockData: [Self] {
         [
-            EntertainmentContent(image: .poster1, ranking: "1"),
-            EntertainmentContent(image: .poster2, ranking: "2"),
+            EntertainmentContent(image: .poster2, ranking: "1"),
+            EntertainmentContent(image: .poster4, ranking: "2"),
             EntertainmentContent(image: .poster3, ranking: "3"),
-            EntertainmentContent(image: .poster4, ranking: "4"),
+            EntertainmentContent(image: .poster1, ranking: "4"),
             EntertainmentContent(image: .poster5, ranking: "5")
         ]
     }
