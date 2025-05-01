@@ -1,5 +1,5 @@
 //
-//  MainCell.swift
+//  TodaysTvingCell.swift
 //  TVING
 //
 //  Created by 김승원 on 5/1/25.
@@ -10,9 +10,11 @@ import UIKit
 import SnapKit
 import Then
 
-final class MainCell: BaseCollectionViewCell {
+final class TodaysTvingCell: BaseCollectionViewCell {
     
     // MARK: - UI Properties
+    
+    private let rankingLabel = UILabel()
     
     private let imageView = UIImageView()
     
@@ -33,6 +35,11 @@ final class MainCell: BaseCollectionViewCell {
     // MARK: - UI Setting
     
     override func setStyle() {
+        rankingLabel.do {
+            $0.textColor = .primaryWhite
+            $0.font = .pretendard(.semiBold, size: 50)
+        }
+        
         imageView.do {
             $0.contentMode = .scaleAspectFill
             $0.clipsToBounds = true
@@ -40,20 +47,28 @@ final class MainCell: BaseCollectionViewCell {
     }
     
     override func setUI() {
-        contentView.addSubview(imageView)
+        contentView.addSubviews(rankingLabel, imageView)
     }
     
     override func setLayout() {
+        rankingLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
+        
         imageView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.verticalEdges.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.width.equalTo(98)
         }
     }
 }
 
 // MARK: - Functions
 
-extension MainCell {
+extension TodaysTvingCell {
     func configure(_ entertainmentContent: EntertainmentContent) {
+        rankingLabel.text = entertainmentContent.ranking
         imageView.image = entertainmentContent.image
     }
 }

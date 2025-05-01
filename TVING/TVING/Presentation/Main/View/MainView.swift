@@ -26,7 +26,7 @@ final class MainView: BaseView {
         }
         
         collectionView.do {
-            $0.backgroundColor = .yellow
+            $0.backgroundColor = .primaryBlack
         }
     }
     

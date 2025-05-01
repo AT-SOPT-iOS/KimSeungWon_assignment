@@ -12,7 +12,8 @@ final class MainViewController: BaseViewController {
     // MARK: - Properties
     
     enum MainSection: CaseIterable {
-        case main
+        case mainPoster
+        case todaysTving
     }
     
     private let rootView = MainView()
@@ -49,6 +50,13 @@ final class MainViewController: BaseViewController {
 private extension MainViewController {
     func setRegister() {
         rootView.collectionView.register(MainCell.self, forCellWithReuseIdentifier: MainCell.reuseIdentifier)
+        rootView.collectionView.register(TodaysTvingCell.self, forCellWithReuseIdentifier: TodaysTvingCell.reuseIdentifier)
+        
+        rootView.collectionView.register(
+            MainHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: MainHeaderView.reuseIdentifier
+        )
     }
 }
 
@@ -57,31 +65,76 @@ private extension MainViewController {
 private extension MainViewController {
     func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (section, _) in
-            print(section)
             let section = MainSection.allCases[section]
             
             switch section {
-            case .main:
+            case .mainPoster:
                 return self.configureMainSection()
+            case .todaysTving:
+                return self.configureTodaysTvingSection()
             }
         }
     }
     
     func configureMainSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
         )
+        
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1), heightDimension: .absolute(530)
+            widthDimension: .absolute(400),
+            heightDimension: .absolute(577)
         )
+        
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
         
         return section
+    }
+    
+    func configureTodaysTvingSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalWidth(1)
+        )
+        
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .absolute(134),
+            heightDimension: .absolute(146)
+        )
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.interItemSpacing = NSCollectionLayoutSpacing.fixed(18)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 12
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
+        section.orthogonalScrollingBehavior = .groupPaging
+        section.boundarySupplementaryItems = [configureHeaderView()]
+        
+        return section
+    }
+    
+    func configureHeaderView() -> NSCollectionLayoutBoundarySupplementaryItem {
+        let size = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(41)
+        )
+        
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: size,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        
+        return header
     }
 }
 
@@ -98,8 +151,10 @@ extension MainViewController: UICollectionViewDataSource {
     ) -> Int {
         
         switch MainSection.allCases[section] {
-        case .main:
-            return EntertainmentContent.mainMockData.count
+        case .mainPoster:
+            return EntertainmentContent.mainPosterMockData.count
+        case .todaysTving:
+            return EntertainmentContent.todaysTvingMockData.count
         }
     }
     
@@ -108,15 +163,47 @@ extension MainViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         switch MainSection.allCases[indexPath.section] {
-        case .main:
+        case .mainPoster:
             guard let cell = rootView.collectionView.dequeueReusableCell(
                 withReuseIdentifier: MainCell.reuseIdentifier,
                 for: indexPath
             ) as? MainCell else {
                 return UICollectionViewCell()
             }
-            cell.dataBind(EntertainmentContent.mainMockData[indexPath.row])
+            cell.configure(EntertainmentContent.mainPosterMockData[indexPath.row])
+            return cell
+            
+        case .todaysTving:
+            guard let cell = rootView.collectionView.dequeueReusableCell(
+                withReuseIdentifier: TodaysTvingCell.reuseIdentifier,
+                for: indexPath
+            ) as? TodaysTvingCell else {
+                return UICollectionViewCell()
+            }
+            cell.configure(EntertainmentContent.todaysTvingMockData[indexPath.row])
             return cell
         }
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        guard let headerView = rootView.collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: MainHeaderView.reuseIdentifier,
+            for: indexPath
+        ) as? MainHeaderView else {
+            return UICollectionReusableView()
+        }
+        
+        switch MainSection.allCases[indexPath.section] {
+        case .mainPoster:
+            break
+        case .todaysTving:
+            headerView.configure(title: "오늘의 티빙 TOP 5")
+        }
+        return headerView
     }
 }
