@@ -14,6 +14,8 @@ final class MainViewController: BaseViewController {
     enum MainSection: CaseIterable {
         case mainPoster
         case todaysTving
+        case live
+        case movie
     }
     
     private let rootView = MainView()
@@ -51,6 +53,8 @@ private extension MainViewController {
     func setRegister() {
         rootView.collectionView.register(MainCell.self, forCellWithReuseIdentifier: MainCell.reuseIdentifier)
         rootView.collectionView.register(TodaysTvingCell.self, forCellWithReuseIdentifier: TodaysTvingCell.reuseIdentifier)
+        rootView.collectionView.register(LiveCell.self, forCellWithReuseIdentifier: LiveCell.reuseIdentifier)
+        rootView.collectionView.register(MovieCell.self, forCellWithReuseIdentifier: MovieCell.reuseIdentifier)
         
         rootView.collectionView.register(
             MainHeaderView.self,
@@ -72,6 +76,10 @@ private extension MainViewController {
                 return self.configureMainSection()
             case .todaysTving:
                 return self.configureTodaysTvingSection()
+            case .live:
+                return self.configureLiveSection()
+            case .movie:
+                return self.configureMovieSection()
             }
         }
     }
@@ -85,7 +93,7 @@ private extension MainViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .absolute(400),
+            widthDimension: .absolute(UIScreen.main.bounds.width),
             heightDimension: .absolute(577)
         )
         
@@ -100,7 +108,7 @@ private extension MainViewController {
     func configureTodaysTvingSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalWidth(1)
+            heightDimension: .fractionalHeight(1)
         )
         
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -111,11 +119,58 @@ private extension MainViewController {
         )
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.interItemSpacing = NSCollectionLayoutSpacing.fixed(18)
         
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 12
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12)
+        section.orthogonalScrollingBehavior = .groupPaging
+        section.boundarySupplementaryItems = [configureHeaderView()]
+        
+        return section
+    }
+    
+    func configureLiveSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .absolute(160),
+            heightDimension: .absolute(134)
+        )
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 7
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12)
+        section.orthogonalScrollingBehavior = .groupPaging
+        section.boundarySupplementaryItems = [configureHeaderView()]
+        
+        return section
+    }
+    
+    func configureMovieSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .absolute(98),
+            heightDimension: .absolute(146)
+        )
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 7
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12)
         section.orthogonalScrollingBehavior = .groupPaging
         section.boundarySupplementaryItems = [configureHeaderView()]
         
@@ -125,7 +180,7 @@ private extension MainViewController {
     func configureHeaderView() -> NSCollectionLayoutBoundarySupplementaryItem {
         let size = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .absolute(41)
+            heightDimension: .absolute(55)
         )
         
         let header = NSCollectionLayoutBoundarySupplementaryItem(
@@ -133,6 +188,8 @@ private extension MainViewController {
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top
         )
+        
+        header.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: -12, bottom: 0, trailing: -12)
         
         return header
     }
@@ -155,6 +212,10 @@ extension MainViewController: UICollectionViewDataSource {
             return EntertainmentContent.mainPosterMockData.count
         case .todaysTving:
             return EntertainmentContent.todaysTvingMockData.count
+        case .live:
+            return EntertainmentContent.liveMockData.count
+        case .movie:
+            return EntertainmentContent.movieMockData.count
         }
     }
     
@@ -182,6 +243,26 @@ extension MainViewController: UICollectionViewDataSource {
             }
             cell.configure(EntertainmentContent.todaysTvingMockData[indexPath.row])
             return cell
+            
+        case .live:
+            guard let cell = rootView.collectionView.dequeueReusableCell(
+                withReuseIdentifier: LiveCell.reuseIdentifier,
+                for: indexPath
+            ) as? LiveCell else {
+                return UICollectionViewCell()
+            }
+            cell.configure(EntertainmentContent.liveMockData[indexPath.row])
+            return cell
+            
+        case .movie:
+            guard let cell = rootView.collectionView.dequeueReusableCell(
+                withReuseIdentifier: MovieCell.reuseIdentifier,
+                for: indexPath
+            ) as? MovieCell else {
+                return UICollectionViewCell()
+            }
+            cell.configure(EntertainmentContent.movieMockData[indexPath.row])
+            return cell
         }
     }
     
@@ -203,7 +284,12 @@ extension MainViewController: UICollectionViewDataSource {
             break
         case .todaysTving:
             headerView.configure(title: "오늘의 티빙 TOP 5")
+        case .live:
+            headerView.configure(title: "실시간 인기 라이브", shouldShowButton: true)
+        case .movie:
+            headerView.configure(title: "실시간 인기 영화" , shouldShowButton: true)
         }
+        
         return headerView
     }
 }

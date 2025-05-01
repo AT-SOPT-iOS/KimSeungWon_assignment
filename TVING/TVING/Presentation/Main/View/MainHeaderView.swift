@@ -57,14 +57,14 @@ final class MainHeaderView: BaseCollectionReusableView {
     
     override func setLayout() {
         titleLabel.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(12)
+            $0.bottom.equalToSuperview().inset(10)
         }
         
         seeMoreButton.snp.makeConstraints {
             $0.height.equalTo(20)
             $0.width.equalTo(44)
-            $0.centerY.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(10)
             $0.trailing.equalToSuperview().inset(4)
         }
     }
@@ -73,8 +73,8 @@ final class MainHeaderView: BaseCollectionReusableView {
 // MARK: - Functions
 
 extension MainHeaderView {
-    func configure(title: String, isHidden: Bool = true) {
+    func configure(title: String, shouldShowButton: Bool = false) {
         titleLabel.text = title
-        seeMoreButton.isHidden = isHidden
+        seeMoreButton.isHidden = !shouldShowButton
     }
 }
