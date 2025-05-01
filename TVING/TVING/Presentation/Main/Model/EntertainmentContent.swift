@@ -16,7 +16,7 @@ struct EntertainmentContent {
 }
 
 extension EntertainmentContent {
-    /// mainPoster 섹션 mockData
+    /// mainPoster section mockData
     static var mainPosterMockData: [Self] {
         [
             EntertainmentContent(image: .poster1),
@@ -27,7 +27,7 @@ extension EntertainmentContent {
         ]
     }
     
-    /// today 섹션 mockData
+    /// today section mockData
     static var todaysTvingMockData: [Self] {
         [
             EntertainmentContent(image: .poster2, ranking: "1"),
@@ -38,7 +38,7 @@ extension EntertainmentContent {
         ]
     }
     
-    /// live 섹션 mockData
+    /// live section mockData
     static var liveMockData: [Self] {
         [
             EntertainmentContent(image: .live1, ranking: "1", title: "지구오락실2", episode: "3화", rating: "27.7%"),
@@ -50,7 +50,7 @@ extension EntertainmentContent {
         ]
     }
     
-    /// movie 섹션 mockData
+    /// movie section mockData
     static var movieMockData: [Self] {
         [
             EntertainmentContent(image: .movie1),
@@ -62,7 +62,7 @@ extension EntertainmentContent {
         ]
     }
     
-    /// baseball 섹션 mockData
+    /// baseball section mockData
     static var baseballMockData: [Self] {
         [
             EntertainmentContent(image: .baseball1),
@@ -74,6 +74,18 @@ extension EntertainmentContent {
             EntertainmentContent(image: .baseball7),
             EntertainmentContent(image: .baseball8),
             EntertainmentContent(image: .baseball9)
+        ]
+    }
+    
+    // platform section mockData
+    static var platformMockData: [Self] {
+        [
+            EntertainmentContent(image: .platform1),
+            EntertainmentContent(image: .platform2),
+            EntertainmentContent(image: .platform3),
+            EntertainmentContent(image: .platform4),
+            EntertainmentContent(image: .platform1),
+            EntertainmentContent(image: .platform2)
         ]
     }
 }
