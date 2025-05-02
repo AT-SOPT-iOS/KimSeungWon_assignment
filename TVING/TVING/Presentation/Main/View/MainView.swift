@@ -22,7 +22,21 @@ final class MainView: BaseView {
     
     private let profileImageView = UIImageView()
     
-    private let segmentedControl = UIView()
+    private let homeLabel = UILabel()
+    
+    private let dramaLabel = UILabel()
+    
+    private let entertainmentLabel = UILabel()
+    
+    private let movieLabel = UILabel()
+    
+    private let sportsLabel = UILabel()
+    
+    private let newsLabel = UILabel()
+    
+    private let segmentStackView = UIStackView()
+    
+    private let underLineView = UILabel()
     
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     
@@ -32,9 +46,51 @@ final class MainView: BaseView {
         navigationContainerView.do {
             $0.backgroundColor = .primaryBlack
         }
+
+        homeLabel.do {
+            $0.text = "홈"
+            $0.textColor = .primaryWhite
+            $0.font = .pretendard(.regular, size: 17)
+        }
         
-        segmentedControl.do {
-            $0.backgroundColor = .blue
+        dramaLabel.do {
+            $0.text = "드라마"
+            $0.textColor = .primaryWhite
+            $0.font = .pretendard(.regular, size: 17)
+        }
+        
+        entertainmentLabel.do {
+            $0.text = "예능"
+            $0.textColor = .primaryWhite
+            $0.font = .pretendard(.regular, size: 17)
+        }
+        
+        movieLabel.do {
+            $0.text = "영화"
+            $0.textColor = .primaryWhite
+            $0.font = .pretendard(.regular, size: 17)
+        }
+        
+        sportsLabel.do {
+            $0.text = "스포츠"
+            $0.textColor = .primaryWhite
+            $0.font = .pretendard(.regular, size: 17)
+        }
+        
+        newsLabel.do {
+            $0.text = "뉴스"
+            $0.textColor = .primaryWhite
+            $0.font = .pretendard(.regular, size: 17)
+        }
+        
+        segmentStackView.do {
+            $0.axis = .horizontal
+            $0.alignment = .fill
+            $0.distribution = .equalSpacing
+        }
+        
+        underLineView.do {
+            $0.backgroundColor = .primaryWhite
         }
         
         collectionView.do {
@@ -59,9 +115,18 @@ final class MainView: BaseView {
     }
     
     override func setUI() {
-        addSubviews(navigationContainerView, segmentedControl, collectionView)
+        addSubviews(navigationContainerView, segmentStackView, underLineView, collectionView)
         
         navigationContainerView.addSubviews(tvingLogoImageView, profileImageView, magnifyingGlassButton)
+        
+        segmentStackView.addArrangedSubviews(
+            homeLabel,
+            dramaLabel,
+            entertainmentLabel,
+            movieLabel,
+            sportsLabel,
+            newsLabel
+        )
     }
     
     override func setLayout() {
@@ -88,14 +153,21 @@ final class MainView: BaseView {
             $0.size.equalTo(30)
         }
         
-        segmentedControl.snp.makeConstraints {
+        segmentStackView.snp.makeConstraints {
             $0.top.equalTo(navigationContainerView.snp.bottom)
-            $0.height.equalTo(55)
-            $0.horizontalEdges.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview().inset(18)
+            $0.height.equalTo(27)
+        }
+        
+        underLineView.snp.makeConstraints {
+            $0.top.equalTo(segmentStackView.snp.bottom).offset(7)
+            $0.leading.equalTo(segmentStackView.snp.leading)
+            $0.width.equalTo(homeLabel.snp.width)
+            $0.height.equalTo(3)
         }
         
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(segmentedControl.snp.bottom)
+            $0.top.equalTo(segmentStackView.snp.bottom).offset(17)
             $0.horizontalEdges.bottom.equalToSuperview()
         }
     }
