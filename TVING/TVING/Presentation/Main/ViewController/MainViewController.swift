@@ -11,15 +11,25 @@ final class MainViewController: BaseViewController {
     
     // MARK: - Properties
     
-    enum MainSection: CaseIterable {
-        case mainPoster
-        case todaysTving
-        case live
-        case movie
-        case baseball
-        case platform
-        case bestContents
+    enum MainSection {
+        case mainPoster([EntertainmentContent])
+        case todaysTving([EntertainmentContent])
+        case live([EntertainmentContent])
+        case movie([EntertainmentContent])
+        case baseball([EntertainmentContent])
+        case platform([EntertainmentContent])
+        case bestContents([EntertainmentContent])
     }
+    
+    private let mainMockData: [MainSection] = [
+        .mainPoster(EntertainmentContent.mainPosterMockData),
+        .todaysTving(EntertainmentContent.todaysTvingMockData),
+        .live(EntertainmentContent.liveMockData),
+        .movie(EntertainmentContent.movieMockData),
+        .baseball(EntertainmentContent.baseballMockData),
+        .platform(EntertainmentContent.platformMockData),
+        .bestContents(EntertainmentContent.bestContentsMockData)
+    ]
     
     private let rootView = MainView()
     
@@ -87,7 +97,7 @@ private extension MainViewController {
 private extension MainViewController {
     func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (section, _) in
-            let section = MainSection.allCases[section]
+            let section = self.mainMockData[section]
             
             switch section {
             case .mainPoster:
@@ -307,29 +317,28 @@ private extension MainViewController {
 
 extension MainViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return MainSection.allCases.count
+        return mainMockData.count
     }
     
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        
-        switch MainSection.allCases[section] {
-        case .mainPoster:
-            return EntertainmentContent.mainPosterMockData.count
-        case .todaysTving:
-            return EntertainmentContent.todaysTvingMockData.count
-        case .live:
-            return EntertainmentContent.liveMockData.count
-        case .movie:
-            return EntertainmentContent.movieMockData.count
-        case .baseball:
-            return EntertainmentContent.baseballMockData.count
-        case .platform:
-            return EntertainmentContent.platformMockData.count
-        case .bestContents:
-            return EntertainmentContent.bestContentsMockData.count
+        switch mainMockData[section] {
+        case .mainPoster(let mockData):
+            return mockData.count
+        case .todaysTving(let mockData):
+            return mockData.count
+        case .live(let mockData):
+            return mockData.count
+        case .movie(let mockData):
+            return mockData.count
+        case .baseball(let mockData):
+            return mockData.count
+        case .platform(let mockData):
+            return mockData.count
+        case .bestContents(let mockData):
+            return mockData.count
         }
     }
     
@@ -338,75 +347,75 @@ extension MainViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         
-        switch MainSection.allCases[indexPath.section] {
-        case .mainPoster:
+        switch mainMockData[indexPath.section] {
+        case .mainPoster(let mockData):
             guard let cell = rootView.collectionView.dequeueReusableCell(
                 withReuseIdentifier: MainCell.reuseIdentifier,
                 for: indexPath
             ) as? MainCell else {
                 return UICollectionViewCell()
             }
-            cell.configure(EntertainmentContent.mainPosterMockData[indexPath.row])
+            cell.configure(mockData[indexPath.row])
             return cell
             
-        case .todaysTving:
+        case .todaysTving(let mockData):
             guard let cell = rootView.collectionView.dequeueReusableCell(
                 withReuseIdentifier: TodaysTvingCell.reuseIdentifier,
                 for: indexPath
             ) as? TodaysTvingCell else {
                 return UICollectionViewCell()
             }
-            cell.configure(EntertainmentContent.todaysTvingMockData[indexPath.row])
+            cell.configure(mockData[indexPath.row])
             return cell
             
-        case .live:
+        case .live(let mockData):
             guard let cell = rootView.collectionView.dequeueReusableCell(
                 withReuseIdentifier: LiveCell.reuseIdentifier,
                 for: indexPath
             ) as? LiveCell else {
                 return UICollectionViewCell()
             }
-            cell.configure(EntertainmentContent.liveMockData[indexPath.row])
+            cell.configure(mockData[indexPath.row])
             return cell
             
-        case .movie:
+        case .movie(let mockData):
             guard let cell = rootView.collectionView.dequeueReusableCell(
                 withReuseIdentifier: MovieCell.reuseIdentifier,
                 for: indexPath
             ) as? MovieCell else {
                 return UICollectionViewCell()
             }
-            cell.configure(EntertainmentContent.movieMockData[indexPath.row])
+            cell.configure(mockData[indexPath.row])
             return cell
             
-        case .baseball:
+        case .baseball(let mockData):
             guard let cell = rootView.collectionView.dequeueReusableCell(
                 withReuseIdentifier: BaseballCell.reuseIdentifier,
                 for: indexPath
             ) as? BaseballCell else {
                 return UICollectionViewCell()
             }
-            cell.configure(EntertainmentContent.baseballMockData[indexPath.row], row: indexPath.row)
+            cell.configure(mockData[indexPath.row], row: indexPath.row)
             return cell
             
-        case .platform:
+        case .platform(let mockData):
             guard let cell = rootView.collectionView.dequeueReusableCell(
                 withReuseIdentifier: PlatformCell.reuseIdentifier,
                 for: indexPath
             ) as? PlatformCell else {
                 return UICollectionViewCell()
             }
-            cell.configure(EntertainmentContent.platformMockData[indexPath.row])
+            cell.configure(mockData[indexPath.row])
             return cell
             
-        case .bestContents:
+        case .bestContents(let mockData):
             guard let cell = rootView.collectionView.dequeueReusableCell(
                 withReuseIdentifier: BestContentsCell.reuseIdentifier,
                 for: indexPath
             ) as? BestContentsCell else {
                 return UICollectionViewCell()
             }
-            cell.configure(EntertainmentContent.bestContentsMockData[indexPath.row])
+            cell.configure(mockData[indexPath.row])
             return cell
         }
     }
@@ -426,7 +435,7 @@ extension MainViewController: UICollectionViewDataSource {
                 return UICollectionReusableView()
             }
             
-            switch MainSection.allCases[indexPath.section] {
+            switch mainMockData[indexPath.section] {
             case .mainPoster, .baseball, .platform:
                 break
             case .todaysTving:

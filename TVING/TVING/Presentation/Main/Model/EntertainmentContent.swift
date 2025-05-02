@@ -15,6 +15,8 @@ struct EntertainmentContent {
     var rating: String = ""
 }
 
+// MARK: - Mock Data
+
 extension EntertainmentContent {
     /// mainPoster section mockData
     static var mainPosterMockData: [Self] {
