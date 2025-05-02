@@ -38,7 +38,7 @@ final class MainViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setDefaultNavigationBar()
+        navigationController?.navigationBar.isHidden = true
     }
     
     override func setView() {
