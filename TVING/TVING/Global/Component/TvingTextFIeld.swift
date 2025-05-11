@@ -50,6 +50,7 @@ extension TvingTextField {
         case id
         case password
         case nickname
+        case search
         
         var font: UIFont {
             switch self {
@@ -59,6 +60,8 @@ extension TvingTextField {
                 return .pretendard(.semiBold, size: 15)
             case .nickname:
                 return .pretendard(.regular, size: 14)
+            case .search:
+                return .pretendard(.semiBold, size: 15)
             }
         }
         
@@ -70,6 +73,8 @@ extension TvingTextField {
                 return .gray2
             case .nickname:
                 return .primaryBlack
+            case .search:
+                return .gray2
             }
         }
         
@@ -81,6 +86,8 @@ extension TvingTextField {
                 return .gray4
             case .nickname:
                 return .gray1
+            case .search:
+                return .gray4
             }
         }
         var placeholder: String {
@@ -91,6 +98,8 @@ extension TvingTextField {
                 return "비밀번호"
             case .nickname:
                 return "닉네임"
+            case .search:
+                return "yyyymmdd형식으로 검색"
             }
         }
         
@@ -102,17 +111,21 @@ extension TvingTextField {
                 return .gray2
             case .nickname:
                 return .gray2
+            case .search:
+                return .gray2
             }
         }
         
         var isSecureTextEntry: Bool {
             switch self {
             case .id:
-                false
+                return false
             case .password:
-                true
+                return true
             case .nickname:
-                false
+                return false
+            case .search:
+                return false
             }
         }
         
@@ -124,6 +137,8 @@ extension TvingTextField {
                 return .whileEditing
             case .nickname:
                 return .whileEditing
+            case .search:
+                return .whileEditing
             }
         }
         
@@ -134,6 +149,8 @@ extension TvingTextField {
             case .password:
                 return .default
             case .nickname:
+                return .default
+            case .search:
                 return .default
             }
         }
