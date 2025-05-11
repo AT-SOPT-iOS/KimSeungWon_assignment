@@ -51,6 +51,14 @@ final class MainViewController: BaseViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
+    override func setAction() {
+        rootView.magnifyingGlassButton.addTarget(
+            self,
+            action: #selector(magnifyingGlassButtonDidTap),
+            for: .touchUpInside
+        )
+    }
+    
     override func setView() {
         rootView.collectionView.collectionViewLayout = createCompositionalLayout()
     }
@@ -89,6 +97,12 @@ private extension MainViewController {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
             withReuseIdentifier: MainFooterView.reuseIdentifier
         )
+    }
+    
+    @objc func magnifyingGlassButtonDidTap() {
+        let viewController = MovieViewController()
+        viewController.modalPresentationStyle = .formSheet
+        self.present(viewController, animated: true)
     }
 }
 

@@ -18,7 +18,7 @@ final class MainView: BaseView {
     
     private let tvingLogoImageView = UIImageView()
     
-    private let magnifyingGlassButton = UIButton()
+    let magnifyingGlassButton = UIButton()
     
     private let profileImageView = UIImageView()
     
