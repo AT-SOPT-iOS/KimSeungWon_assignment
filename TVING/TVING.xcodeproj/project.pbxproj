@@ -12,6 +12,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E36B98CB2DCE1DA100E56A81 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = /Users/seungwon/Desktop/AT_SOPT/KimSeungWon_assignment/TVING/TVING/Presentation/Movie/Network/Config.xcconfig; sourceTree = "<absolute>"; };
 		E36F85962DABF246005BDA2B /* TVING.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TVING.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -153,6 +154,7 @@
 /* Begin XCBuildConfiguration section */
 		E36F85AA2DABF247005BDA2B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E36B98CB2DCE1DA100E56A81 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -180,6 +182,7 @@
 		};
 		E36F85AB2DABF247005BDA2B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E36B98CB2DCE1DA100E56A81 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -207,6 +210,7 @@
 		};
 		E36F85AC2DABF247005BDA2B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E36B98CB2DCE1DA100E56A81 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -271,6 +275,7 @@
 		};
 		E36F85AD2DABF247005BDA2B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E36B98CB2DCE1DA100E56A81 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
