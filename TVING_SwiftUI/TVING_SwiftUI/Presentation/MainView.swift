@@ -27,7 +27,7 @@ struct MainView: View {
                     HStack(spacing: 0) {
                         ForEach(Filters.allCases, id: \.self) { filter in
                             filter.filterContentView
-                                .frame(width: 375)
+                                .frame(maxWidth: UIScreen.main.bounds.width)
                         }
                     }
                 }
@@ -36,10 +36,12 @@ struct MainView: View {
                         proxy.scrollTo(newValue, anchor: .center)
                     }
                 }
+                .scrollDisabled(true)
+                
+                Spacer()
             }
-            
-            Spacer()
         }
+        .ignoresSafeArea()
         .background(.coreBlack)
     }
     
@@ -76,6 +78,7 @@ struct MainView: View {
             .padding(.leading, 10)
             
         }
+        .padding(.top, 21)
         .padding(.trailing, 10)
     }
     
@@ -149,23 +152,21 @@ extension MainView {
             switch self {
             case .home:
                 HomeView()
-            case .drama:
-                Text("Drama")
-                    .foregroundStyle(.coreRed)
-            case .entertainment:
-                Text("Entertain")
-                    .foregroundStyle(.coreRed)
-            case .movie:
-                Text("Movie")
-                    .foregroundStyle(.coreRed)
-            case .sports:
-                Text("Sports")
-                    .foregroundStyle(.coreRed)
-            case .news:
-                Text("News")
-                    .foregroundStyle(.coreRed)
+            case .drama, .entertainment, .movie, .sports, .news:
+                TempView(title: self.title)
             }
         }
+    }
+}
+
+struct TempView: View {
+    
+    var title: String
+    
+    var body: some View {
+        Text(title)
+            .foregroundStyle(.coreRed)
+            .frame(width: 375)
     }
 }
 
