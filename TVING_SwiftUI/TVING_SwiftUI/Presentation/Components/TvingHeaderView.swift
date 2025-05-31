@@ -43,7 +43,7 @@ extension TvingHeaderView {
         case todaysTving
         case realTimePopularLive
         case realTimePopularMovie
-        case masterpiece
+        case masterPiece
         
         var title: String {
             switch self {
@@ -53,14 +53,14 @@ extension TvingHeaderView {
                 return "실시간 인기 LIVE"
             case .realTimePopularMovie:
                 return "실시간 인기 영화"
-            case .masterpiece:
+            case .masterPiece:
                 return "김승원PD의 인생작 TOP 5"
             }
         }
         
         var shouldShowMoreButton: Bool {
             switch self {
-            case .todaysTving, .masterpiece:
+            case .todaysTving, .masterPiece:
                 return false
             case .realTimePopularLive, .realTimePopularMovie:
                 return true

@@ -160,7 +160,6 @@ extension MainView {
 }
 
 struct TempView: View {
-    
     var title: String
     
     var body: some View {
