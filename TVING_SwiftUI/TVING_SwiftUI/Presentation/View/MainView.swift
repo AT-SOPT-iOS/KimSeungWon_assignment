@@ -22,24 +22,7 @@ struct MainView: View {
             
             filterSection
             
-            ScrollViewReader { proxy in
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 0) {
-                        ForEach(Filters.allCases, id: \.self) { filter in
-                            filter.filterContentView
-                                .frame(maxWidth: UIScreen.main.bounds.width)
-                        }
-                    }
-                }
-                .onChange(of: selectedFilter) { _, newValue in
-                    withAnimation(.easeInOut) {
-                        proxy.scrollTo(newValue, anchor: .center)
-                    }
-                }
-                .scrollDisabled(true)
-                
-                Spacer()
-            }
+            contentSection
         }
         .ignoresSafeArea()
         .background(.coreBlack)
@@ -119,6 +102,27 @@ struct MainView: View {
             .frame(height: 400)
             .clipped()
     }
+    
+    var contentSection: some View {
+        ScrollViewReader { proxy in
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 0) {
+                    ForEach(Filters.allCases, id: \.self) { filter in
+                        filter.filterContentView
+                            .frame(maxWidth: UIScreen.main.bounds.width)
+                    }
+                }
+            }
+            .onChange(of: selectedFilter) { _, newValue in
+                withAnimation(.easeInOut) {
+                    proxy.scrollTo(newValue, anchor: .center)
+                }
+            }
+            .scrollDisabled(true)
+            
+            Spacer()
+        }
+    }
 }
 
 extension MainView {
@@ -156,16 +160,6 @@ extension MainView {
                 TempView(title: self.title)
             }
         }
-    }
-}
-
-struct TempView: View {
-    var title: String
-    
-    var body: some View {
-        Text(title)
-            .foregroundStyle(.coreRed)
-            .frame(width: 375)
     }
 }
 

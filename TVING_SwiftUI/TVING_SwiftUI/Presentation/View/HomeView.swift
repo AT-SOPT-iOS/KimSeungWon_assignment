@@ -55,8 +55,8 @@ struct HomeView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHGrid(rows: tvingRows, spacing: 20) {
-                    ForEach(0..<10) { _ in
-                        TodaysTvingCell()
+                    ForEach(EntertainmentContent.todaysTvingMockData, id: \.self) { data in
+                        TodaysTvingCell(entertainmentContent: data)
                     }
                 }
                 .padding(.horizontal, 12)
@@ -70,8 +70,8 @@ struct HomeView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHGrid(rows: tvingRows, spacing: 8) {
-                    ForEach(0..<10) { _ in
-                        RealTimePopularLiveCell()
+                    ForEach(EntertainmentContent.liveMockData, id: \.self) { data in
+                        RealTimePopularLiveCell(entertainmentContent: data)
                     }
                 }
                 .padding(.horizontal, 12)
@@ -85,8 +85,8 @@ struct HomeView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHGrid(rows: tvingRows, spacing: 8) {
-                    ForEach(0..<10) { _ in
-                        Image(.movie1)
+                    ForEach(EntertainmentContent.movieMockData, id: \.self) { data in
+                        Image(data.image)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .clipShape(RoundedRectangle(cornerRadius: 3))
@@ -101,12 +101,12 @@ struct HomeView: View {
     var baseBallSection: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 0) {
-                ForEach(0..<10) { index in
+                ForEach(Array(EntertainmentContent.baseballMockData.enumerated()), id: \.offset) { index, data in
                     ZStack {
                         Color(index % 2 == 0 ? .coreWhite : .coreBlack)
                             .frame(width: 80, height: 50)
                         
-                        Image(.baseball1)
+                        Image(data.image)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .clipped()
@@ -120,13 +120,13 @@ struct HomeView: View {
     var platformSection: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 7) {
-                ForEach(0..<10) { index in
+                ForEach(EntertainmentContent.platformMockData, id: \.self) { data in
                     ZStack {
                         Color.grayscale4
                             .frame(width: 90, height: 45)
                             .clipShape(RoundedRectangle(cornerRadius: 4))
                         
-                        Image(.platform1)
+                        Image(data.image)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .clipped()
@@ -144,8 +144,8 @@ struct HomeView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHGrid(rows: tvingRows, spacing: 8) {
-                    ForEach(0..<10) { _ in
-                        Image(.live1)
+                    ForEach(EntertainmentContent.bestContentsMockData, id: \.self) { data in
+                        Image(data.image)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .clipShape(RoundedRectangle(cornerRadius: 3))

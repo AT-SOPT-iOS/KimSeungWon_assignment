@@ -8,27 +8,34 @@
 import SwiftUI
 
 struct RealTimePopularLiveCell: View {
+    
+    // MARK: - Properties
+    
+    var entertainmentContent: EntertainmentContent
+    
+    // MARK: - body
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 13) {
-            Image(.live1)
+            Image(entertainmentContent.image)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .clipShape(RoundedRectangle(cornerRadius: 3))
                 .frame(width: 160, height: 80)
             
             HStack(alignment: .top, spacing: 4) {
-                Text("1")
+                Text(entertainmentContent.ranking)
                     .font(.system(size: 25, weight: .bold, design: .default))
                     .foregroundStyle(.white)
                 
                 VStack(alignment: .leading, spacing: 3) {
-                    Text("JTBC")
+                    Text(entertainmentContent.title)
                         .font(.caption)
                         .foregroundStyle(.coreWhite)
-                    Text("이혼숙려캠프 34화")
+                    Text(entertainmentContent.episode)
                         .font(.caption2)
                         .foregroundStyle(.grayscale2)
-                    Text("27.2%")
+                    Text(entertainmentContent.rating)
                         .font(.caption2)
                         .foregroundStyle(.grayscale2)
                 }
@@ -36,8 +43,4 @@ struct RealTimePopularLiveCell: View {
             .padding(.leading, 10)
         }
     }
-}
-
-#Preview {
-    RealTimePopularLiveCell()
 }
